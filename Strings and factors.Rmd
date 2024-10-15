@@ -1,0 +1,156 @@
+---
+title: "strings and factors"
+author: "Yifei Yu"
+date: "2024-10-11"
+output: html_document
+---
+
+```{r}
+library(rvest)
+library(p8105.datasets)
+library(tidyverse)
+library(rvest)
+library(httr)
+```
+
+
+```{r}
+url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
+
+drug_use_html = read_html(url)
+```
+
+
+## Do srings
+
+```{r}
+string_vec = c("my", "name", "is", "jeff")
+
+str_detect(string_vec, "a")
+
+str_replace(string_vec, "jeff", "Jeff")
+
+str_replace(string_vec, "e", "E")
+```
+
+
+
+```{r}
+string_vec = c(
+  "i think we all rule for participating",
+  "i think i have been caught",
+  "i think this will be quite fun actually",
+  "it will be fun, i think"
+  )
+
+str_detect(string_vec, "i think")
+
+str_detect(string_vec, "^i think")
+
+## ^ first sentence begin with i think, beginning with the words i think
+
+str_detect(string_vec, "i think$")
+# $ end with the words i think
+```
+
+
+
+```{r}
+string_vec = c(
+  "Time for a Pumpkin Spice Latte!",
+  "went to the #pumpkinpatch last weekend",
+  "Pumpkin Pie is obviously the best pie",
+  "SMASHING PUMPKINS -- LIVE IN CONCERT!!"
+  )
+
+str_detect(string_vec,"pumpkin")
+
+str_detect(string_vec,"Pumpkin")
+
+str_detect(string_vec,"PUMPKIN")
+
+str_detect(string_vec,"[Pp]umpkin")
+
+## [Pp] -- either Capital P or lower case p
+```
+
+
+
+
+```{r}
+string_vec = c(
+  '7th inning stretch',
+  '1st half soon to begin. Texas won the toss.',
+  'she is 5 feet 4 inches tall',
+  '3AM - cant sleep :('
+  )
+
+str_detect(string_vec, "^[0-9][a-z]")
+
+str_detect(string_vec, "[0-9][a-zA-Z]")
+
+str_detect(string_vec, "^[0-9][a-zA-Z]")
+
+## number followed by two letters
+## [0-9] give me number between 0 and 9
+## ^ start with the sentence
+```
+
+
+
+
+```{r}
+string_vec = c(
+  'Its 7:11 in the evening',
+  'want to go to 7-11?',
+  'my flight is AA711',
+  'NetBios: scanning ip 203.167.114.66'
+  )
+
+str_detect(string_vec, "7.11")
+
+## 7.11 -- could put everything between 7 and 11 but use . to indicate everything
+```
+
+
+
+```{r}
+string_vec = c(
+  'The CI is [2, 5]',
+  ':-]',
+  ':-[',
+  'I found the answer on pages [6-7]'
+  )
+
+str_detect(string_vec, "\\[")
+
+## \\[ -- indicate this [ is what I'm actually looking for, it is not a braket
+```
+
+
+
+
+## Factors ...
+
+```{r}
+sex_vec = factor(c("male", "male", "female", "female"))
+
+as.numeric(sex_vec)
+```
+
+
+do some releveling
+
+```{r}
+sex_vec = fct_relevel(sex_vec, "male")
+## male comes the first
+
+as.numeric(sex_vec)
+
+## srting_remove -- replace with nothing
+```
+
+
+
+
+
